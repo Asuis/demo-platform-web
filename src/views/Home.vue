@@ -15,7 +15,7 @@ export default {
 </script>
 
 
-<style scoped>
+<style scope>
 
     .viewer{
         background: #000;

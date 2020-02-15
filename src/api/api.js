@@ -1,10 +1,24 @@
 import axios from 'axios'
 import Vue from 'vue'
-
 axios.defaults.baseURL = '/api/'
 axios.defaults.withCredentials = true
 axios.defaults.timeout = 100000 // 10000ms的超时验证
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
+
+axios.interceptors.request.use(function (config) {
+  // 在发送请求之前做些什么
+  //config是axios请求的参数
+  console.log(config)
+  const token = sessionStorage.getItem('token')
+  if (token !== null && token !== '') {
+    config.headers.Authorization = "Bearer " + token
+  }
+  return config;
+}, function (error) {
+  // 对请求错误做些什么
+  return Promise.reject(error);
+})
+
 
 const instance = {}
 
@@ -14,9 +28,10 @@ const instance = {}
   instance[key] = function (...args) { // 闭包给原函数捕获异常
     return axios[key](...args)
       .then((data) => {
-        return data
+        return Promise.resolve(data)
       })
       .catch((err) => {
+        console.log('api error:', err)
         if (err.response && err.response.status >= 500) {
           Vue.prototype.$Message({
             type: 'error',
@@ -65,81 +80,85 @@ const instance = {}
 const api = {
   user: {
     SignIn: (form) => {
-      instance.post('/v1/usr/sign_in', form)
+      return instance.post('/v1/usr/sign_in', form)
 
     },
     SignUp: (form) => {
-      instance.post('/v1/usr/sign_out', form)
+      return instance.post('/v1/usr/sign_out', form)
     }
   },
   repo: {
     Create: (form) => {
-      instance.post('/v1/repo/create', form)
+      return instance.post('/v1/repo/create', form)
     },
     Update: (form) => {
-      instance.put(`/v1/repo/${form.username}/${form.repo}`, form)
+      return instance.put(`/v1/repo/${form.username}/${form.repo}`, form)
     },
     Delete: (form) => {
-      instance.delete(`/v1/repo/${form.username}/${form.repo}`, form)
+      return instance.delete(`/v1/repo/${form.username}/${form.repo}`, form)
     },
     List: (form) => {
-      instance.post('/v1/repo/list', form)
+      return instance.get(`/v1/repo/list/${form.pageSize}/${form.page}/${form.order}`)
     },
     Info: (form) => {
-      instance.get(`/v1/repo/${form.username}/${form.repo}`, {
-        params: form
-      })
+      return instance.get(`/v1/repo/info/${form.username}/${form.repo}`)
     },
     Branches: (form) => {
-      instance.get(`/v1/repo/branch/${form.username}/${form.repo}`)
+      return instance.get(`/v1/repo/branch/${form.username}/${form.repo}`)
     },
     Commit: (form) => {
-      instance.get(`/v1/repo/commit/${form.username}/${form.repo}`)
+      return instance.get(`/v1/repo/commit/${form.username}/${form.repo}`)
+    },
+    Files: (form) => {
+      return instance.get(`/v1/repo/file/${form.username}/${form.repo}/${form.relpath}`)
+    },
+    FileInfo: (form) => {
+      return instance.get(`/v1/repo/rawfile/${form.username}/${form.repo}/${form.relpath}`)
     }
   },
   docker: {
     Create: (form) => {
-      instance.post('/v1/cloud/create', form)
+      return instance.post('/v1/cloud/create', form)
     },
     Update: (form) => {
-      instance.put(`/v1/cloud/${form.cloud_id}`, form)
+      return instance.put(`/v1/cloud/${form.cloud_id}`, form)
     },
     Delete: (form) => {
-      instance.delete(`/v1/cloud/${form.cloud_id}`, form)
+      return instance.delete(`/v1/cloud/${form.cloud_id}`, form)
     },
     List: (form) => {
-      instance.get('/v1/cloud/list', {
+      return instance.get('/v1/cloud/list', {
         params: form
       })
     },
     Run: (form) => {
-      instance.post(`/v1/cloud/action/run/${form.cloud_id}`)
+      return instance.post(`/v1/cloud/action/run/${form.cloud_id}`)
     },
     Stop: (form) => {
-      instance.post(`/v1/cloud/action/stop/${form.cloud_id}`)
+      return instance.post(`/v1/cloud/action/stop/${form.cloud_id}`)
     },
     Stat: (form) => {
-      instance.post(`/v1/cloud/action/stat/${form.cloud_id}`)
+      return instance.post(`/v1/cloud/action/stat/${form.cloud_id}`)
     }
   },
   admin: {
     UserList: (form) => {
-      instance.get(`/v1/admin/users/${form.pageSize}/${form.page}/${form.order}`)
+      return instance.get(`/v1/admin/users/${form.pageSize}/${form.page}/${form.order}`)
     },
     User: (form) => {
-      instance.get(`/v1/admin/user/${form.id}`)
+      return instance.get(`/v1/admin/user/${form.id}`)
     },
     Containers: (form) => {
-      instance.get(`/v1/admin/containers/${form.pageSize}/${form.page}/${form.order}`)
+      return instance.get(`/v1/admin/containers/${form.pageSize}/${form.page}/${form.order}`)
     },
     Container: (form) => {
-      instance.get(`/v1/admin/container/${form.cloud_id}/`)
+      return instance.get(`/v1/admin/container/${form.cloud_id}/`)
     },
     Repositories: (form) => {
-      instance.get(`/v1/admin/repositories/${form.pageSize}/${form.page}/${form.order}`)
+      return instance.get(`/v1/admin/repositories/${form.pageSize}/${form.page}/${form.order}`)
     },
     Repository:(form)=>{
-      instance.get(`/v1/admin/repository/${form.repo_id}`)
+      return instance.get(`/v1/admin/repository/${form.repo_id}`)
     }
   }
 }

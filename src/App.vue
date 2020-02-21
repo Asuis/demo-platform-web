@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Navbar></Navbar>
-    <router-view/>
+    <keep-alive>
+        <router-view/>
+      </keep-alive>
   </div>
 </template>
 
@@ -14,6 +16,11 @@ export default {
   },
   mounted () {
     this.$store.commit('user/fetchUserFromSession')
+  },
+  computed: {
+    key() {
+      return this.$route.fullPath
+    }
   }
 }
 </script>

@@ -1,8 +1,6 @@
 <template>
   <div>
       <div id="term" ref="terminal"></div>
-      <el-button @click="write()">收到消息</el-button>
-
   </div>
 </template>
 
@@ -17,14 +15,14 @@ export default {
     data() {
         return {
             term: undefined,
-            ws: undefined
+            ws: undefined,
+            token: ''
         }
     },
     mounted() {
         var term = new Terminal()
         term.open(this.$refs.terminal)
         term.onKey((arg1)=>{
-        // eslint-disable-next-line no-console
             console.log(arg1)
             if(arg1.domEvent.keyCode === 13) {
                 term.writeln('\n')
@@ -38,9 +36,8 @@ export default {
         this.initWebsocket()
     },
     methods: {
-
         initWebsocket() {
-            var ws = new WebSocket('ws://102.168.50.178:8000/cloud/console/xxx?t=kfjkdfjdf')
+            var ws = new WebSocket(`ws://192.168.2.178:8000/v1/cloud/console/${this.$route.params.container_id}?t=${this.token}`)
             ws.onopen = (e) => {
                 console.log(`connect ${e}`)
             }
@@ -58,7 +55,18 @@ export default {
         },
         write() {
             this.term.write("\n")
+        },
+    },
+    computed: {
+        getToken() {
+            return this.$store.getters['user/getToken']
         }
+    },
+    watch: {
+        getToken(val) {
+            this.token = val
+        },
+        
     }
 }
 </script>

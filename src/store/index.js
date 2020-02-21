@@ -22,6 +22,9 @@ export default new Vuex.Store({
                         name: state.name,
                         avatar: state.avatar,
                     }
+                },
+                getToken(state) {
+                    return state.token
                 }
             },
             mutations: {
@@ -76,7 +79,7 @@ export default new Vuex.Store({
                 repo: [],
                 info: {},
                 files: [],
-                fileInfo: {}
+                fileInfo: ''
             },
             getters: {
                 listRepositories(state) {
@@ -84,6 +87,12 @@ export default new Vuex.Store({
                 },
                 infoRepo(state) {
                     return state.info
+                },
+                files(state) {
+                    return state.files
+                },
+                fileInfo(state) {
+                    return state.fileInfo
                 }
             },
             mutations: {

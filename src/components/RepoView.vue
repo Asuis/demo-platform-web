@@ -9,81 +9,74 @@
         <div class="container">
 
             <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-                <el-tab-pane label="用户管理" name="first">
+                <el-tab-pane label="文件" name="first">
 
-                <el-input class="container-search" v-model="input" placeholder="查找"></el-input>
+                    <el-input class="container-search" v-model="input" placeholder="查找"></el-input>
 
-                    <el-table :data="tableData" style="width: 100%, margin-bottom:10px">
-                        <el-table-column prop="date" label="文件名" width="180">
-                         <template slot-scope="scope">
-        <i class="el-icon-folder"></i>
-        <span style="margin-left: 10px">{{ scope.row.date }}</span>
-      </template>
+                    <el-table :data="files" style="width: 100%; margin-bottom:10px">
+                        <el-table-column prop="Name" label="文件名" width="180">
+                            <template slot-scope="scope">
+                                <i v-if="scope.row.IsDir" class="el-icon-folder"></i>
+                                <span @click="handleFile(scope.row.Name, scope.row.IsDir)"
+                                    style="margin-left: 10px">{{ scope.row.Name }}</span>
+                            </template>
                         </el-table-column>
-                        <el-table-column prop="name" label="" width="180">
+                        <el-table-column prop="Name" label="" width="180">
                         </el-table-column>
-                        <el-table-column prop="address" label="更新时间">
+                        <el-table-column prop="Size" label="文件大小">
                         </el-table-column>
                     </el-table>
 
                     <el-card shadow="never">
                         <div slot="header">
-                            Readme.md
+                            {{fileName}}
                         </div>
-                        <div class="text item">
-                            {{'列表内容' }}
+                        <div class="text item" v-html="getFileInfo">
                         </div>
                     </el-card>
                 </el-tab-pane>
-                <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-                <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-                <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+                <el-tab-pane label="配置" name="second">配置</el-tab-pane>
+                <el-tab-pane label="控制台" name="third">
+                </el-tab-pane>
+                <el-tab-pane label="展示" name="fourth">展示</el-tab-pane>
+                <el-tab-pane label="文档" name="wiki">文档</el-tab-pane>
+
             </el-tabs>
         </div>
         <div>
         </div>
     </el-card>
 </template>
-
 <script>
+
+    import marked from 'marked'
     export default {
         name: 'RepoView',
+        components: {
+        },
         data() {
             return {
                 username: '',
                 repo: '',
-                relpath: '',
+                relpath: '/',
                 info: {},
+                files: [],
                 input: '',
-                activeName: 'first',
-                tableData: [{
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄'
-                }]
+                fileName: '',
+                activeName: 'first'
             }
         },
         mounted() {
-            this.username = this.$route.params.username
-            this.repo = this.$route.params.repo
-            // this.relpath = this.$route.params.relpath
             this.init()
-
         },
         methods: {
             init() {
+                this.username = this.$route.params.username
+                this.repo = this.$route.params.repo
+                this.relpath = this.$route.params.relpath
+                if (this.relpath == undefined) {
+                    this.relpath = ''
+                }
                 const payload = {
                     username: this.username,
                     repo: this.repo
@@ -94,17 +87,69 @@
                     repo: this.repo,
                     relpath: this.relpath
                 })
+                this.$store.dispatch('repo/fileInfo', {
+                    username: this.username,
+                    repo: this.repo,
+                    relpath: 'README.md'
+                })
+            },
+            handleFile(name, isDir) {
+                console.log('dfd', name, isDir)
+                this.username = this.$route.params.username
+                this.repo = this.$route.params.repo
+                this.relpath = this.$route.params.relpath
+                if (this.relpath == undefined) {
+                    this.relpath = ''
+                }
+                if (isDir) {
+                    if(this.relpath==='') {
+                    this.$router.push(`/repo/${this.username}/${this.repo}/${name}`)
+
+                    } else {
+                    this.$router.push(`/repo/${this.username}/${this.repo}/${this.relpath + '/' + name}`)
+
+                    }
+                } else {
+                    this.$store.dispatch('repo/fileInfo', {
+                    username: this.username,
+                    repo: this.repo,
+                    relpath: `${this.relpath + '/' + name}`
+                }).then(()=>{
+                    this.fileName = name
+                })
+                }
+            },
+            handleClick(e) {
+                console.log(e)
             }
         },
         computed: {
             getInfo() {
                 return this.$store.getters['repo/infoRepo']
+            },
+            getFiles() {
+                return this.$store.getters['repo/files']
+            },
+            getFileInfo() {
+
+                return marked(this.$store.getters['repo/fileInfo'])
             }
         },
         watch: {
             getInfo(val) {
                 console.log(val)
                 this.info = val
+            },
+            getFiles(val) {
+                this.files = val
+            },
+            getFileInfo(val) {
+                this.fileInfo = val
+            },
+            "$route"() {
+                this.init()
+                this.$nextTick()
+                console.log(this.$route)
             }
         }
     }
@@ -116,7 +161,8 @@
         margin-right: 8px;
         float: right;
     }
-    .container-search::after{
+
+    .container-search::after {
         clear: both;
     }
 
@@ -157,8 +203,13 @@
         width: 100%;
     }
 
-    .name-view>el-avatar,
-    span {
+    .name-view>el-avatar {
+        margin: 16px;
+        color: white;
+        font-size: 20px;
+    }
+
+    .name-view>span {
         margin: 16px;
         color: white;
         font-size: 20px;

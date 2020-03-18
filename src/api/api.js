@@ -116,7 +116,7 @@ const api = {
       return instance.get(`/v1/repo/rawfile/${form.username}/${form.repo}/${form.relpath}`)
     }
   },
-  docker: {
+  container: {
     Create: (form) => {
       return instance.post('/v1/cloud/create', form)
     },
@@ -127,9 +127,7 @@ const api = {
       return instance.delete(`/v1/cloud/${form.cloud_id}`, form)
     },
     List: (form) => {
-      return instance.get('/v1/cloud/list', {
-        params: form
-      })
+      return instance.get(`/v1/cloud/list/${form.pageSize}/${form.page}/${form.order}`)
     },
     Run: (form) => {
       return instance.post(`/v1/cloud/action/run/${form.cloud_id}`)
@@ -139,6 +137,9 @@ const api = {
     },
     Stat: (form) => {
       return instance.post(`/v1/cloud/action/stat/${form.cloud_id}`)
+    },
+    Images: () => {
+      return instance.get(`/v1/cloud/images`)
     }
   },
   admin: {
@@ -159,7 +160,41 @@ const api = {
     },
     Repository:(form)=>{
       return instance.get(`/v1/admin/repository/${form.repo_id}`)
+    },
+    CreateNews: (form)=> {
+      return instance.post(`/v1/news`, form)
+    },
+    News: (form)=> {
+       return  instance.get(`/v1/news/list/${form.pageSize}/${form.page}/${form.order}`)
     }
+  },
+  news: {
+    List: (form)=> {
+      return instance.get(`/v1/news/list/${form.pageSize}/${form.page}/${form.order}`)
+    },
+    UpdateNews: (form)=> {
+      return instance.put(`/v1/news`, form)
+    },
+    DeleteNews: (form) => {
+      return instance.put(`/v1/news`, form)
+    },
+    TopNews: (form)=> {
+      return instance.put(`/v1/news`, form)
+    }
+  },
+  group: {
+    Create: (form) => {
+      return instance.post('/v1/group/create', form)
+    },
+    Update: (form) => {
+      return instance.put(`/v1/group/${form.cloud_id}`, form)
+    },
+    Delete: (form) => {
+      return instance.delete(`/v1/group/${form.cloud_id}`, form)
+    },
+    List: (form) => {
+      return instance.get(`/v1/group/list/${form.pageSize}/${form.page}/${form.order}`)
+    },
   }
 }
 

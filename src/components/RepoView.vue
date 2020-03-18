@@ -63,7 +63,8 @@
                 files: [],
                 input: '',
                 fileName: '',
-                activeName: 'first'
+                activeName: 'first',
+                hasFile: false
             }
         },
         mounted() {

@@ -1,26 +1,23 @@
 <template>
-    <div class="home_container">
-
-        <el-container>
-  <el-main class="viewer">Main</el-main>
-  <el-aside class="login_view">Aside</el-aside>
-</el-container>
+    <div class="home-container">
+        <Navbar></Navbar>
+        <router-view />
     </div>
 </template>
 
 <script>
-export default {
-    name: "Home"
-}
+    import Navbar from '@/components/Navbar.vue'
+    export default {
+        name: "Home",
+        components: {
+            Navbar
+        }
+    }
 </script>
 
 
 <style scope>
-
-    .viewer{
-        background: #000;
-    }
-    .login_view{
-        background: #e3e3e3;
+    .home-container {
+        height: 100vh;
     }
 </style>

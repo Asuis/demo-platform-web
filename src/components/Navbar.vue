@@ -1,16 +1,28 @@
 <template>
     <div>
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-menu :router="true"  :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
 
             <el-menu-item index="4">
-                <router-link to="/home"></router-link>
+                <router-link to="/home">学科竞赛管理平台</router-link>
             </el-menu-item>
+
+            <el-submenu index="3">
+                <template slot="title">竞赛管理</template>
+                <el-menu-item index="/mycontainer">我的项目</el-menu-item>
+                <el-menu-item index="/mycontainer">我的容器</el-menu-item>
+                <el-menu-item index="2-3">预览项目</el-menu-item>
+                <el-menu-item index="2-4">我的比赛</el-menu-item>
+                <el-menu-item index="2-5">退出</el-menu-item>
+            </el-submenu>
 
             <el-submenu index="2" style="float:right;">
                 <template slot="title">我的控制台</template>
-                <el-menu-item index="2-1">我的项目</el-menu-item>
-                <el-menu-item index="2-2">我的容器</el-menu-item>
-                <el-menu-item index="2-3">展示</el-menu-item>
+                <el-menu-item index="/mycontainer">我的项目</el-menu-item>
+                <el-menu-item index="/mycontainer">我的容器</el-menu-item>
+                <el-menu-item index="2-3">预览项目</el-menu-item>
+                <el-menu-item index="2-4">我的比赛</el-menu-item>
+                <el-menu-item index="2-5">退出</el-menu-item>
+
             </el-submenu>
             <div class="user-view">
                 <el-popover placement="bottom" width="360" trigger="click">
@@ -49,6 +61,7 @@
                 dialogVisible: false,
                 activeIndex: '1',
                 user: {},
+                isAdmin: false,
                 gridData: [{
                     date: '2016-05-02',
                     name: '王小虎',
@@ -72,6 +85,7 @@
             handleSelect() {
 
             },
+            handleClose() {},
         openRepoInit() {
             this.dialogVisible = true
         }
@@ -79,12 +93,19 @@
     computed: {
             getUser() {
                 return this.$store.getters['user/getUser']
+            },
+            IsAdmin() {
+                return this.$store.getters['user/getUser']
             }
         },
         watch: {
             getUser(val) {
                 this.user = val
                 console.log('getuser', val)
+            },
+            IsAdmin(val) {
+                this.IsAdmin = val
+                console.log('isAdmin', val)
             }
         }
     }

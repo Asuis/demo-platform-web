@@ -5,7 +5,7 @@
                     <el-form-item label="项目名">
                         <el-row :gutter="0">
                             <el-col :span="6">
-                            <el-select v-model="RepositoryInit.Prefix" clearable placeholder="请选择">
+                            <el-select v-model="RepositoryInit.prefix" clearable placeholder="请选择">
                                 <el-option v-for="item in options" :key="item.value" :label="item.label"
                                     :value="item.value">
                                 </el-option>
@@ -13,16 +13,15 @@
                         </el-col>
                         <el-col :span="1" style="text-align:center;"> / </el-col>
                         <el-col :span="17">
-                            <el-input v-model="RepositoryInit.Account"></el-input>
+                            <el-input v-model="RepositoryInit.name"></el-input>
                         </el-col>
                         </el-row>
-                        
                     </el-form-item>
                     <el-form-item label="描述">
-                        <el-input type="textarea" v-model="RepositoryInit.Description"></el-input>
+                        <el-input type="textarea" v-model="RepositoryInit.description"></el-input>
                     </el-form-item>
                     <el-form-item label="是否公开">
-    <el-switch v-model="RepositoryInit.IsPrivate"></el-switch>
+    <el-switch v-model="RepositoryInit.isPrivate"></el-switch>
   </el-form-item>
                     <el-form-item>
                         <el-button type="primary" style="width:100%" @click="onSubmit">创建</el-button>
@@ -38,14 +37,29 @@
         data() {
             return {
                 RepositoryInit: {
-                    Prefix: '',
-                    Name: '',
-                    Description: '',
-                    IsPrivate: false,
-                    UseCustomAvatar: false,
-                    AvatarUrl: ''
+                    prefix: '',
+                    name: '',
+                    description: '',
+                    isPrivate: false,
+                    useCustomAvatar: false,
+                    avatarUrl: ''
                 },
                 options: []
+            }
+        },
+        methods: {
+            onSubmit() {
+                this.$store.dispatch('repo/create',  {
+                    prefix: this.RepositoryInit.prefix,
+                    name: this.RepositoryInit.prefix + '/'+this.RepositoryInit.name,
+                    description: this.RepositoryInit.description,
+                    isPrivate: this.RepositoryInit.isPrivate,
+                    useCustomAvatar: this.RepositoryInit.useCustomAvatar,
+                    avatarUrl: this.RepositoryInit.avatarUrl
+                }).then((data)=>{
+                    console.log(data)
+                    this.$router.push(`/repo/${ this.RepositoryInit.prefix}/${this.RepositoryInit.name}/`)
+                })
             }
         },
         mounted() {

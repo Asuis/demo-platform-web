@@ -12,24 +12,7 @@
         </div>
       </el-col>
       <el-col :span="8">
-        <el-card :body-style="{ padding: '0px' }" class="login_view">
-          <img src="http://res.mengxiangjing.com/53969178_p4_master1200.jpg" class="image">
-          <div style="padding: 14px;">
-            <el-form>
-              <el-form :label-position="labelPosition" label-width="80px" :model="Login">
-                <el-form-item label="邮箱/账户">
-                  <el-input prefix-icon="el-icon-user" v-model="Login.Account"></el-input>
-                </el-form-item>
-                <el-form-item label="密码">
-                  <el-input type="password" prefix-icon="el-icon-lock" v-model="Login.Passwd"></el-input>
-                </el-form-item>
-                <el-form-item>
-                  <el-button type="primary" style="width:100%" @click="onSubmit">登录</el-button>
-                </el-form-item>
-              </el-form>
-            </el-form>
-          </div>
-        </el-card>
+        <login-view></login-view>
       </el-col>
     </el-row>
   </div>
@@ -37,10 +20,12 @@
 
 <script>
   import RepoList from '@/components/RepoList.vue'
+  import LoginView from '@/components/user/LoginView.vue'
   export default {
     name: "Login",
     components: {
-      RepoList
+      RepoList,
+      LoginView
     },
     data() {
       return {
@@ -70,9 +55,12 @@
     vertical-align: middle;
     background: #000;
     background: url('http://res.mengxiangjing.com/preview.jpg');
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     padding: 65px;
+    max-width: 100%;
+    max-height: 100%;
   }
 
 

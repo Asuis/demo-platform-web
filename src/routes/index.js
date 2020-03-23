@@ -11,6 +11,7 @@ import AdminPage from '@/views/admin/AdminPage.vue'
 import AdminLogin from '@/views/admin/LoginPage.vue'
 import UserPage from '@/views/admin/user/UserPage.vue'
 import NewsEditPage from '@/views/admin/contest/news/NewsEditPage.vue'
+import ContestPage from '@/views/admin/contest/manage/ContestPage.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -32,6 +33,10 @@ export default new Router({
                 path: 'news',
                 name: 'news',
                 component: NewsEditPage
+            },{
+                path: 'contest',
+                name: 'contest',
+                component: ContestPage
             }]
         },
         {

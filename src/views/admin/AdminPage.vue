@@ -39,7 +39,7 @@
     }
 </script>
 
-<style scoped>
+<style scope>
     .container{
         height: 100vh;
         max-width: 100%;

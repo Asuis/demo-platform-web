@@ -114,7 +114,7 @@
         }
     }
 </script>
-<style scope>
+<style scoped>
     .container {
         text-align: center;
         max-width: 1000px;

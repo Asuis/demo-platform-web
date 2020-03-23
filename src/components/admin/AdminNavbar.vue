@@ -8,7 +8,7 @@
                     <el-submenu index="1">
                         <template slot="title"><i class="el-icon-message"></i>竞赛管理</template>
                             <el-menu-item index="1-1">竞赛过程配置</el-menu-item>
-                            <el-menu-item index="1-2">竞赛管理</el-menu-item>
+                            <el-menu-item index="contest">竞赛管理</el-menu-item>
                             <el-menu-item index="1-3">数据统计</el-menu-item>
 
                     </el-submenu>

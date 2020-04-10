@@ -12,6 +12,8 @@ import AdminLogin from '@/views/admin/LoginPage.vue'
 import UserPage from '@/views/admin/user/UserPage.vue'
 import NewsEditPage from '@/views/admin/contest/news/NewsEditPage.vue'
 import ContestPage from '@/views/admin/contest/manage/ContestPage.vue'
+import ProcessPage from '@/views/admin/contest/process/ProcessPage.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -37,6 +39,34 @@ export default new Router({
                 path: 'contest',
                 name: 'contest',
                 component: ContestPage
+            }, {
+                path: 'process',
+                name: 'process',
+                component: ProcessPage
+            }, {
+                path: 'audit_conf',
+                name: 'audit_conf',
+                component: ProcessPage
+            },{
+                path: 'audit',
+                name: 'audit',
+                component: ProcessPage
+            },{
+                path: 'repo',
+                name: 'repo',
+                component: ProcessPage
+            },{
+                path: 'display',
+                name: 'display',
+                component: ProcessPage
+            }, {
+                path: 'sys',
+                name: 'sys',
+                component: ProcessPage
+            }, {
+                path: 'data',
+                name: 'data',
+                component: ProcessPage
             }]
         },
         {

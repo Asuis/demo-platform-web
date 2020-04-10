@@ -7,27 +7,27 @@
         <el-menu :default-openeds="['1', '3']" :router="true">
                     <el-submenu index="1">
                         <template slot="title"><i class="el-icon-message"></i>竞赛管理</template>
-                            <el-menu-item index="1-1">竞赛过程配置</el-menu-item>
+                            <el-menu-item index="process">竞赛过程配置</el-menu-item>
                             <el-menu-item index="contest">竞赛管理</el-menu-item>
-                            <el-menu-item index="1-3">数据统计</el-menu-item>
+                            <el-menu-item index="data">数据统计</el-menu-item>
 
                     </el-submenu>
                     <el-submenu index="2">
                         <template slot="title"><i class="el-icon-menu"></i>评审管理</template>
-                            <el-menu-item index="2-1">评审配置</el-menu-item>
-                            <el-menu-item index="2-2">评审</el-menu-item>
+                            <el-menu-item index="audit_conf">评审配置</el-menu-item>
+                            <el-menu-item index="audit">评审</el-menu-item>
                     </el-submenu>
-                    <el-menu-item index="3"><i class="el-icon-menu"></i>项目管理</el-menu-item>
-                    <el-menu-item index="6"><i class="el-icon-menu"></i>项目展示</el-menu-item>
+                    <el-menu-item index="repo"><i class="el-icon-menu"></i>项目管理</el-menu-item>
+                    <el-menu-item index="display"><i class="el-icon-menu"></i>项目展示</el-menu-item>
 
 
                     <el-submenu index="4">
                         <template slot="title"><i class="el-icon-message"></i>系统管理</template>
-                            <el-menu-item index="4-1">容器管理</el-menu-item>
-                            <el-menu-item index="4-2">系统配置</el-menu-item>
+                            <el-menu-item index="container">容器管理</el-menu-item>
+                            <el-menu-item index="sys">系统配置</el-menu-item>
                         
                     </el-submenu>
-                    <el-menu-item index="admin/user"><i class="el-icon-user"></i>用户管理</el-menu-item>
+                    <el-menu-item index="user"><i class="el-icon-user"></i>用户管理</el-menu-item>
                 </el-menu>
 
     </div>

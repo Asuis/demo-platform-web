@@ -21,26 +21,28 @@
 </template>
 
 <script>
+    import {UserLogin} from '@/service/user'
     export default {
         name: 'LoginView',
         data() {
             return {
-                Login: {
-                    Account: 'asuis',
-                    Passwd: 'Demo127117',
-                },
+                Login: UserLogin,
                 loading: false,
                 publicPath: process.env.BASE_URL
             }
         },
+        mounted() {
+            console.log(this.Login)
+        },
         methods: {
+            
             onSubmit(e) {
                 console.log(`submit :`, e)
                 this.loading = true
                 this.$store.dispatch('user/signIn', this.Login).then(() => {
                     this.loading = false
 
-                    this.$router.push('/admin')
+                    this.$router.push('/admin/#')
                 })
             }
         }

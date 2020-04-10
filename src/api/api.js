@@ -85,6 +85,9 @@ const api = {
     },
     SignUp: (form) => {
       return instance.post('/v1/usr/sign_out', form)
+    },
+    LoadDetail: (form) => {
+      return instance.get(`/v1/usr/detail`, form)
     }
   },
   repo: {
@@ -195,6 +198,14 @@ const api = {
     List: (form) => {
       return instance.get(`/v1/group/list/${form.pageSize}/${form.page}/${form.order}`)
     },
+  },
+  file: {
+    Upload: (form) => {
+      return instance.post('/v1/file/upload', form)
+    },
+    Delete: (form) => {
+      return instance.delete(`/v1/file/${form.ID}`)
+    }
   }
 }
 

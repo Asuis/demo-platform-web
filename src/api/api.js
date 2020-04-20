@@ -31,42 +31,42 @@ const instance = {}
         return Promise.resolve(data)
       })
       .catch((err) => {
-        console.log('api error:', err)
+        console.log(err.response)
+        console.log(Vue.prototype)
         if (err.response && err.response.status >= 500) {
-          Vue.prototype.$Message({
-            type: 'error',
+          Vue.prototype.$message({
             message: `Σ(;ﾟдﾟ)  服务器崩坏，需要联系管理员维修`,
-            duration: 6.5
+            duration: 2000
           })
         } else if (err.response && err.response.status === 403) {
-          Vue.prototype.$Message({
+          Vue.prototype.$message({
             type: 'error',
             message: `╮(╯_╰)╭ 你没有相关权限进行此操作`,
-            duration: 6.5
+            duration: 2000
           })
         } else if (err.response && err.response.status === 401) {
-          Vue.prototype.$Message({
+          Vue.prototype.$message({
             type: 'error',
             message: `(〃∀〃) 请先登录`,
-            duration: 6.5
+            duration: 2000
           })
         } else if (err.response && err.response.status === 400) {
-          Vue.prototype.$Message({
+          Vue.prototype.$message({
             type: 'error',
             message: `${err.response.data.error}`,
-            duration: 6.5
+            duration: 2000
           })
         } else if (!err.response) {
-          Vue.prototype.$Message({
+          Vue.prototype.$message({
             type: 'error',
             message: `_(:з」∠)_  网络异常，检查你的网线`,
-            duration: 6.5
+            duration: 2000
           })
         } else {
-          Vue.prototype.$Message({
+          Vue.prototype.$message({
             type: 'error',
             message: err.message,
-            duration: 6.5
+            duration: 2000
           })
         }
         return Promise.reject(new Error('I throw this on purpose'))

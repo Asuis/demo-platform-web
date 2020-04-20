@@ -62,11 +62,14 @@
     }
 </script>
 
-<style scope>
+<style scoped>
     .repo-item {
         display: flex;
+        text-decoration: none;
+        color: #000;
+        font-weight: 600;
     }
-
+    
     .repo-ava {
         display: inline;
         flex: 0;

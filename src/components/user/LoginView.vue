@@ -2,8 +2,7 @@
     <el-card :body-style="{ padding: '0px' }" class="login_view card">
         <img :src="`http://res.mengxiangjing.com/AbstractSaltBeds_ZH-CN8351691359.jpg`" class="image">
         <div style="padding: 30px;" class="main">
-            <el-form class="form">
-                <el-form :label-position="labelPosition" label-width="80px" :model="Login">
+                <el-form  class="form" :label-position="labelPosition" label-width="80px" :model="Login">
                     <el-form-item label="邮箱/账户">
                         <el-input prefix-icon="el-icon-user" v-model="Login.Account"></el-input>
                     </el-form-item>
@@ -14,8 +13,10 @@
                         <el-button v-loading.fullscreen.lock="loading" type="primary" style="width:100%"
                             @click="onSubmit">登录</el-button>
                     </el-form-item>
-                </el-form>
             </el-form>
+            <div style="margin:0;padding:0;">
+                <el-button type="text" @click="toRegister">注册</el-button>
+            </div>
         </div>
     </el-card>
 </template>
@@ -43,10 +44,15 @@
                     this.loading = false
 
                     this.$router.push('/admin/#')
+                }).catch(()=>{
+                    this.loading = false
                 })
-            }
-        }
+            },
+            toRegister() {
+                this.$router.push('/register')
+            },
     }
+}
 </script>
 
 <style scoped>

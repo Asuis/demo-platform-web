@@ -1,6 +1,9 @@
 <template>
     <div>
-
+        <el-breadcrumb class="bread" separator="/">
+                <el-breadcrumb-item :to="{ path: '/admin/#' }">首页</el-breadcrumb-item>
+                <el-breadcrumb-item><router-link to="">竞赛信息管理</router-link></el-breadcrumb-item>
+            </el-breadcrumb>
         <div class="search-container">
             <el-select placeholder="状态" v-model="searchForm.status" class="select">
                 <el-option label="进行中" value="1"></el-option>
@@ -27,7 +30,7 @@
                 </el-card>
             </el-col>
         </el-row>
-        <el-pagination style="text-align:center;" background layout="prev, pager, next" :total="total">
+        <el-pagination style="text-align:center;margin-top:20px;" background layout="prev, pager, next" :total="total">
         </el-pagination>
 
         <el-dialog title="竞赛创建" :visible.sync="dialogVisible" width="40%" :before-close="handleClose">
@@ -105,7 +108,7 @@
     }
 </script>
 
-<style scope>
+<style scoped>
     .container {
         flex-wrap: wrap;
     }

@@ -11,7 +11,7 @@
           <repo-list></repo-list>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="6">
         <login-view></login-view>
       </el-col>
     </el-row>
@@ -53,14 +53,15 @@
 <style scoped>
   .home_container {
     vertical-align: middle;
-    background: #000;
-    background: url('http://res.mengxiangjing.com/preview.jpg');
+    background: #fff;
+    background: url('http://res.mengxiangjing.com/banong4.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     padding: 65px;
     max-width: 100%;
-    max-height: 100%;
+    /* max-height: 100%; */
+    height: 200px;
   }
 
 

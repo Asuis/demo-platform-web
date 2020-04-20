@@ -13,7 +13,13 @@ import UserPage from '@/views/admin/user/UserPage.vue'
 import NewsEditPage from '@/views/admin/contest/news/NewsEditPage.vue'
 import ContestPage from '@/views/admin/contest/manage/ContestPage.vue'
 import ProcessPage from '@/views/admin/contest/process/ProcessPage.vue'
-
+import NewsDetails from '@/components/news/NewsDetails.vue'
+import IndexView from '@/views/index/IndexView.vue'
+import RegisterView from '@/components/user/RegisterView.vue'
+import NewsListView from '@/views/contest/NewsListView.vue'
+import ContestListView from '@/views/contest/ContestListView.vue'
+import RepoListView from '@/views/repo/RepoListView.vue'
+import UserDetails from '@/views/admin/user/UserDetails.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -27,15 +33,19 @@ export default new Router({
                 path: 'login',
                 name: 'login',
                 component: Login
-            },{
+            }, {
                 path: 'user',
                 name: 'user',
                 component: UserPage
             },{
+                path: 'user/details/:ID',
+                name: 'userdetails',
+                component: UserDetails
+            }, {
                 path: 'news',
                 name: 'news',
                 component: NewsEditPage
-            },{
+            }, {
                 path: 'contest',
                 name: 'contest',
                 component: ContestPage
@@ -47,15 +57,15 @@ export default new Router({
                 path: 'audit_conf',
                 name: 'audit_conf',
                 component: ProcessPage
-            },{
+            }, {
                 path: 'audit',
                 name: 'audit',
                 component: ProcessPage
-            },{
+            }, {
                 path: 'repo',
                 name: 'repo',
                 component: ProcessPage
-            },{
+            }, {
                 path: 'display',
                 name: 'display',
                 component: ProcessPage
@@ -81,7 +91,32 @@ export default new Router({
             children: [{
                 path: 'login',
                 component: Login
-            }]
+            }, {
+                path: 'news/:id',
+                name: 'news',
+                component: NewsDetails
+            }, {
+                path: '/register',
+                name: 'register',
+                component: RegisterView
+            },{
+                path: 'list/news',
+                name: 'newslist',
+                component: NewsListView
+            },{
+                path: 'list/contest',
+                name: 'contestlist',
+                component: ContestListView
+            },{
+                path: 'list/repo',
+                name: 'repolist',
+                component: RepoListView
+            },
+            {
+                path: '*',
+                name: 'index',
+                component: IndexView
+            },]
         },
         {
             path: '/terminal/:container_id',

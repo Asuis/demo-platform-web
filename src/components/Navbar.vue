@@ -7,30 +7,22 @@
                 <router-link to="/home">学科竞赛管理平台</router-link>
             </el-menu-item>
 
-            <el-submenu v-if="isLogin" index="3">
-                <template slot="title">竞赛管理</template>
-                <el-menu-item index="/mycontainer">我的项目</el-menu-item>
-                <el-menu-item index="/mycontainer">我的容器</el-menu-item>
-                <el-menu-item index="2-3">预览项目</el-menu-item>
-                <el-menu-item index="2-4">我的比赛</el-menu-item>
-                <el-menu-item index="2-5">退出</el-menu-item>
-            </el-submenu>
-            <template v-else>
+
 
                 <el-menu-item index="/index">首页</el-menu-item>
                 <el-menu-item index="/list/news">公告</el-menu-item>
                 <el-menu-item index="/list/contest">竞赛</el-menu-item>
                 <el-menu-item index="/list/repo">项目</el-menu-item>
 
-            </template>
             <div v-if="isLogin">
                 <el-submenu index="2" style="float:right;">
                     <template slot="title">我的控制台</template>
-                    <el-menu-item index="/mycontainer">我的项目</el-menu-item>
+                    <el-menu-item index="/myrepository">我的项目</el-menu-item>
                     <el-menu-item index="/mycontainer">我的容器</el-menu-item>
                     <el-menu-item index="2-3">预览项目</el-menu-item>
                     <el-menu-item index="2-4">我的比赛</el-menu-item>
-                    <el-menu-item index="2-5">退出</el-menu-item>
+                    <el-menu-item index="/mygroup">我的团队</el-menu-item>
+                    <el-menu-item index="2-6">退出</el-menu-item>
 
                 </el-submenu>
                 <div class="user-view">
@@ -75,7 +67,6 @@
                 activeIndex: '1',
                 user: {},
                 isAdmin: false,
-                isLogin: false,
                 gridData: [{
                     date: '2016-05-02',
                     name: '王小虎',
@@ -99,7 +90,9 @@
             handleSelect() {
 
             },
-            handleClose() {},
+            handleClose() {
+              this.dialogVisible = false
+            },
             openRepoInit() {
                 this.dialogVisible = true
             }
@@ -111,7 +104,9 @@
             IsAdmin() {
                 return this.$store.getters['user/getUser']
             },
-
+            isLogin() {
+              return this.$store.getters['user/isLogin']
+            }
         },
         watch: {
             getUser(val) {

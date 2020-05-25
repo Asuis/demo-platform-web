@@ -9,7 +9,7 @@
                     <NewsList></NewsList>
                 </el-col>
                 <el-col :span="8" :offset="1">
-                    <LoginView></LoginView>
+                    <LoginView v-if="!isLogin"></LoginView>
                 </el-col>
 
             </el-row>
@@ -17,10 +17,10 @@
             <el-row style="margin-bottom:12px;">
                 <el-col :span="4" v-for="i in 4" :key="i" :offset="2">
                     <el-card :body-style="{ padding: '0px' }">
-                        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                        <img src="http://res.mengxiangjing.com/53969178_p4_master1200.jpg"
                             class="image">
                         <div style="padding: 14px;">
-                            <span>好吃的汉堡</span>
+                            <span>项目{{i}}</span>
                             <div class="bottom clearfix">
                                 <time class="time">{{ currentDate }}</time>
                             </div>
@@ -65,6 +65,11 @@
                     }
                 ],
 
+            }
+        },
+        computed: {
+          isLogin() {
+              return this.$store.getters['user/isLogin']
             }
         }
     }

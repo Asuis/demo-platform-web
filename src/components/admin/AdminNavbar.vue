@@ -7,11 +7,12 @@
         <el-menu :default-openeds="['1', '3']" :router="true">
             <el-submenu index="1">
                 <template slot="title"><i class="el-icon-message"></i>竞赛管理</template>
-                <el-menu-item index="/admin/news">竞赛公告配置</el-menu-item>
+                <el-menu-item index="/admin/news/list">竞赛公告配置</el-menu-item>
                 <el-menu-item index="/admin/process">竞赛过程配置</el-menu-item>
                 <el-menu-item index="/admin/contest">竞赛管理</el-menu-item>
                 <el-menu-item index="/admin/data">数据统计</el-menu-item>
-
+                <el-menu-item index="/admin/group">团队管理</el-menu-item>
+                <el-menu-item index="/admin/question">选题管理</el-menu-item>
             </el-submenu>
             <el-submenu index="2">
                 <template slot="title"><i class="el-icon-menu"></i>评审管理</template>
@@ -85,10 +86,10 @@
                 this.user = val
                 console.log('getuser', val)
             },
-            IsAdmin(val) {
-                this.IsAdmin = val
-                console.log('isAdmin', val)
-            }
+            // IsAdmin(val) {
+            //     this.isAdmin = val
+            //     console.log('isAdmin', val)
+            // }
         }
     }
 </script>

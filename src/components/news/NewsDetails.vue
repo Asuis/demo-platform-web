@@ -9,7 +9,7 @@
                 <el-breadcrumb-item><a href="/">公告</a></el-breadcrumb-item>
             </el-breadcrumb>
             <div class="news-card">
-                <div v-html="getFileInfo"></div>
+                <div v-html="details.Content"></div>
             </div>
             <el-button style="float:right;" v-if="details.type==='contest'" type="primary">报名</el-button>
 
@@ -33,6 +33,14 @@
                     type: 'news'
                 }
             }
+        },
+        methods: {
+          get() {
+            this.$store.dispatch('news/get', {id: this.$route.params.id}).then(({data})=> {
+              console.log(data)
+              this.details = data
+            })
+          }
         },
         mounted() {
             console.log(this)
@@ -115,10 +123,9 @@
             
             
             `
-        },
-        methods: {
+  this.get()
+},
 
-        },
         computed: {
             getFileInfo() {
                 return marked(this.details.Description)

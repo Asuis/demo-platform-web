@@ -21,11 +21,11 @@
                             </el-input>
                         </el-form-item>
                         <el-form-item label="高校名称">
-                            <el-input type="password" prefix-icon="el-icon-lock" v-model="RegisterForm.SchoolName">
+                            <el-input  v-model="RegisterForm.SchoolName">
                             </el-input>
                         </el-form-item>
-                        <el-form-item label="邮箱">
-                            <el-input prefix-icon="el-icon-lock" v-model="RegisterForm.Email"></el-input>
+                        <el-form-item require label="邮箱">
+                            <el-input prefix-icon="el-icon-email" v-model="RegisterForm.Email"></el-input>
                         </el-form-item>
                         <el-form-item>
                             <el-button v-loading.fullscreen.lock="loading" type="primary" style="width:100%"

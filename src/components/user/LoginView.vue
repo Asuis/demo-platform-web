@@ -43,7 +43,7 @@
                 this.$store.dispatch('user/signIn', this.Login).then(() => {
                     this.loading = false
 
-                    this.$router.push('/admin/#')
+                    // this.$router.push('/admin/#')
                 }).catch(()=>{
                     this.loading = false
                 })

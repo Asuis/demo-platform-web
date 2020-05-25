@@ -11,15 +11,15 @@
       <el-card shadow="nerver" style="margin-bottom:20px;padding:20px;">
              <div v-for="(item, i) in list" :key="item.ID">
                 <div>
-                    <router-link class="text" :to="'/news/1'+item.ID">{{item.Title}}</router-link>
-                    <span style="float:right;padding: 12px 0 6px 0;color:#909399;">{{item.UpdatedTime}}</span>
+                    <router-link class="text" :to="'/news/'+item.ID">{{item.Title}}</router-link>
+                    <span style="float:right;padding: 12px 0 6px 0;color:#909399;">{{format(item.UpdatedUnix)}}</span>
                 </div>
-                <div>{{item.Description}}</div>
+                <div>{{item.Description}}<br/></div>
 
                 <el-divider v-if="list.length-1!==i"></el-divider>
             </div>
 
-            <el-pagination style="text-align:center;margin-top:20px;margin-bottom:10px;" background layout="prev, pager, next" :total="20">
+            <el-pagination :current-page="query.page" style="text-align:center;margin-top:20px;margin-bottom:10px;" background layout="prev, pager, next" :total="total">
             </el-pagination>
         </el-card>
     </div>
@@ -27,10 +27,17 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
     name: 'NewsListView',
     data() {
       return {
+        query: {
+          pageSize: 10,
+          page: 0,
+          order: 'ID'
+        },
+        total: 0,
         list: [{
                         ID: '',
                         Title: '关于组织开展第十一届中国大学生服务外包创新创业大赛第五场企业命题直播答疑活动的通知',
@@ -123,6 +130,22 @@ export default {
                         为了参赛团队能够更加准确的理解企业的赛题需求，经组委会与命题企业的积极沟通，针对学生团队关注较多的命题，特别开设企业视频直播答疑活动。`,
                     },
                 ]
+      
+      }
+    },
+    mounted() {
+      this.get()
+    },
+    methods: {
+      get() {
+        this.$store.dispatch('news/list',this.query).then(({data})=> {
+          console.log(data)
+          this.list = data.Data
+          this.total = data.Total
+        })
+      },
+      format(unix) {
+        return moment.unix(unix).format('M-D')
       }
     }
 }

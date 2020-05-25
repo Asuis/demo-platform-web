@@ -1,10 +1,6 @@
 <template>
   <div>
-    <el-breadcrumb style="margin-bottom:20px;" separator="/">
-      <el-breadcrumb-item :to="{ path: '/admin' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item><a href="/process">流程配置</a></el-breadcrumb-item>
-    </el-breadcrumb>
-    <div class="search-container">
+<div class="search-container">
       <el-select placeholder="状态" v-model="searchForm.status" class="select">
         <el-option label="进行中" value="1"></el-option>
         <el-option label="已结束" value="beijing"></el-option>
@@ -90,57 +86,21 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog title="竞赛流程" :visible.sync="dialogVisible2" width="40%">
-      <el-form>
-        <el-form-item label="流程名称" required>
-          <el-input v-model="processUpdForm.Name" placeholder="竞赛名称"></el-input>
-        </el-form-item>
-        <el-form-item label="流程描述">
-          <el-input v-model="processUpdForm.Desc" type="textarea" placeholder="竞赛名称"></el-input>
-        </el-form-item>
-        <el-form-item label="权限">
-          <el-select v-model="processUpdForm.Role" multiple placeholder="请选择">
-            <el-option v-for="item in roleOptions" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="流程类型">
-          <el-select v-model="processUpdForm.ProcessType" placeholder="请选择">
-            <el-option v-for="item in processTypeOptions" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="开始时间" required>
-          <el-date-picker type="date" placeholder="选择日期" v-model="processUpdForm.StartTime" style="width: 100%;">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="结束时间" required>
-          <el-date-picker type="date" placeholder="选择日期" v-model="processUpdForm.EndTime" style="width: 100%;">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item>
-          <el-button style="float:right;" type="primary" @click="update">保存</el-button>
-        </el-form-item>
-
-      </el-form>
-    </el-dialog>
 
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'ProcessEditPage',
-    data() {
-      return {
-        processForm: {
+export default {
+  name: 'DisplayPage',
+  data() {
+    return {
+      tableData: [],
+      processForm: {
           Name: '',
           StartTime: '',
           EndTime: '',
           Role: [],
-          ProcessType: 4,
           UserIDs: [],
           Ex: '',
           PID: 0
@@ -176,32 +136,10 @@
             label: '管理员'
           }
         ],
-        processTypeOptions: [{
-            value: 0,
-            label: '填写信息'
-          },
-          {
-            value: 1,
-            label: '选题'
-          },
-          {
-            value: 2,
-            label: '上传项目'
-          },
-          {
-            value: 3,
-            label: '审核'
-          },
-          {
-            value: 4,
-            label: '一般'
-          }
-        ],
         searchForm: {
           status: '',
           search: ''
         },
-        tableData: [],
         dialogVisible: false,
         dialogVisible2: false,
         total: 100,
@@ -210,101 +148,11 @@
           pageSize: 10,
           page: 0,
         }
-      }
-    },
-    mounted() {
-      this.list()
-    },
-    methods: {
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`)
-        this.query.pageSize = val
-        this.list()
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`)
-        this.query.page = val
-        this.list()
-      },
-      onSubmit() {
-        this.$store.dispatch('process/create', {
-          ...this.processForm
-        }).then(({
-          data
-        }) => {
-          this.$message({
-            type: 'success',
-            content: '创建成功'
-          })
-          this.dialogVisible = false
-          this.processForm.PID = 0
-          console.log(data)
-        })
-      },
-      onSubmit2(e) {
-        console.log(e.ID)
-        this.processForm.PID = e.ID
-        this.dialogVisible = true
-      },
-      eidit(e) {
-        this.processUpdForm = e
-        this.processUpdForm.ID = e.ID
-        this.dialogVisible2 = true
-      },
-      update() {
-        this.$store.dispatch('process/update', {
-          ...this.processUpdForm
-        }).then(({
-          data
-        }) => {
-          this.$message({
-            type: 'success',
-            content: '保存成功'
-          })
-          this.dialogVisible = false
-          this.processForm.PID = 0
-          console.log(data)
-        })
-      },
-      list() {
-        this.$store.dispatch('process/list', this.query).then(({
-          data
-        }) => {
-          console.log(data)
-          this.tableData = data.Data
-          this.tableData.forEach((e) => {
-            e.hasChildren = true
-          })
-          this.total = data.Total
-        })
-      },
-      load(tree, _, resolve) {
-
-        this.$store.dispatch('process/list', {
-          order: 'ID',
-          pageSize: 100,
-          page: 0,
-          PID: tree.ID
-        }).then(({
-          data
-        }) => {
-          console.log(data)
-          if (data.Data === null) {
-            data.Data = []
-          }
-          resolve(data.Data)
-
-        })
-      },
-      handleClose() {
-        this.dialogVisible = false
-
-      },
-      handleOpen() {
-        this.dialogVisible = true
-      }
-    },
-  }
+    }
+  },
+  mounted() {},
+  methods: {}
+}
 </script>
 
 <style scoped>
@@ -312,6 +160,7 @@
     display: flex;
     justify-content: flex-start;
     margin-bottom: 18px;
+    flex-direction: row;
   }
 
   .search {

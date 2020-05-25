@@ -88,6 +88,21 @@ const api = {
     },
     LoadDetail: (form) => {
       return instance.get(`/v1/usr/detail`, form)
+    },
+    List: (form) => {
+      return instance.post(`/v1/user/list/${form.pageSize}/${form.page}/${form.order}`, form)
+    },
+    BindUser: (form) => {
+      return instance.post('/v1/usr/bind_u', form)
+    },
+    BindStu: (form) => {
+      return instance.post('/v1/usr/bind_stu', form)
+    },
+    BindTeach: (form) => {
+      return instance.post('/v1/usr/bind_teach', form)
+    },
+    Details() {
+      return instance.get('/v1/usr/details')
     }
   },
   repo: {
@@ -172,32 +187,83 @@ const api = {
     }
   },
   news: {
+    Create: (form) => {
+      return instance.post('/v1/news/create', form)
+    },
     List: (form)=> {
-      return instance.get(`/v1/news/list/${form.pageSize}/${form.page}/${form.order}`)
+      return instance.post(`/v1/news/list/${form.pageSize}/${form.page}/${form.order}`, {Title:form.Title})
     },
     UpdateNews: (form)=> {
-      return instance.put(`/v1/news`, form)
+      return instance.put(`/v1/news/info/${form.id}`, form)
     },
     DeleteNews: (form) => {
-      return instance.put(`/v1/news`, form)
+      return instance.delete(`/v1/news/del/${form.id}`)
     },
     TopNews: (form)=> {
-      return instance.put(`/v1/news`, form)
+      return instance.put(`/v1/news/top/${form.id}/${form.action}`)
+    },
+    Get: (form)=> {
+      return instance.get(`/v1/news/info/${form.id}`)
+    }
+  },
+  process: {
+    Create: (form) => {
+      return instance.post('/v1/process/create', form)
+    },
+    List: (form)=> {
+      return instance.post(`/v1/process/list/${form.pageSize}/${form.page}/${form.order}`, {Title:form.Title, PID: form.PID})
+    },
+    UpdateNews: (form)=> {
+      return instance.put(`/v1/process/info/${form.ID}`, form)
+    },
+    DeleteNews: (form) => {
+      return instance.delete(`/v1/process/del/${form.id}`)
+    },
+    Get: (form)=> {
+      return instance.get(`/v1/process/info/${form.id}`)
+    }
+  },
+  display: {
+    Create: (form) => {
+      return instance.post('/v1/display/create', form)
+    },
+    List: (form)=> {
+      return instance.post(`/v1/display/list/${form.pageSize}/${form.page}/${form.order}`, {Title:form.Title, PID: form.PID})
+    },
+    UpdateNews: (form)=> {
+      return instance.put(`/v1/display/info/${form.ID}`, form)
+    },
+    DeleteNews: (form) => {
+      return instance.delete(`/v1/display/del/${form.id}`)
+    },
+    Get: (form)=> {
+      return instance.get(`/v1/display/info/${form.id}`)
     }
   },
   group: {
     Create: (form) => {
-      return instance.post('/v1/group/create', form)
+      return instance.post('/v1/contest/group/create', form)
     },
     Update: (form) => {
-      return instance.put(`/v1/group/${form.cloud_id}`, form)
+      return instance.put(`/v1/contest/group/info/${form.ID}`, form)
     },
     Delete: (form) => {
-      return instance.delete(`/v1/group/${form.cloud_id}`, form)
+      return instance.delete(`/v1/contest/group/${form.ID}`, form)
     },
     List: (form) => {
-      return instance.get(`/v1/group/list/${form.pageSize}/${form.page}/${form.order}`)
+      return instance.post(`/v1/contest/group/list/${form.pageSize}/${form.page}/${form.order}`, form)
     },
+    ListUsers: (form) => {
+      return instance.post(`/v1/contest/group/members/${form.pageSize}/${form.page}/${form.order}`, form)
+
+    },
+    JoinUsers: (form) => {
+      return instance.post(`/v1/contest/group/members_join`, form)
+    },
+    MyList: (form) => {
+      return instance.post(`/v1/contest/group/mylist/${form.pageSize}/${form.page}/${form.order}`, form)
+    },
+    
   },
   file: {
     Upload: (form) => {
@@ -205,6 +271,43 @@ const api = {
     },
     Delete: (form) => {
       return instance.delete(`/v1/file/${form.ID}`)
+    }
+  },
+  contest: {
+    Create: (form) => {
+      return instance.post('/v1/contest/create', form)
+    },
+    Update: (form) => {
+      return instance.put(`/v1/contest/${form.cloud_id}`, form)
+    },
+    Delete: (form) => {
+      return instance.delete(`/v1/contest/${form.cloud_id}`, form)
+    },
+    List: (form) => {
+      return instance.post(`/v1/contest/list/${form.pageSize}/${form.page}/${form.order}`, form)
+    },
+    Get: (form)=> {
+      return instance.get(`/v1/contest/info/${form.id}`)
+    },
+    SignUp: (form) => {
+      return instance.post(`/v1/contest/sign_up/${form.contestID}/${form.groupID}`, form)
+    }
+  },
+  question: {
+    Create: (form) => {
+      return instance.post('/v1/contest/question/create', form)
+    },
+    Update: (form) => {
+      return instance.put(`/v1/contest/question/${form.cloud_id}`, form)
+    },
+    Delete: (form) => {
+      return instance.delete(`/v1/contest/question/${form.cloud_id}`, form)
+    },
+    List: (form) => {
+      return instance.post(`/v1/contest/question/list/${form.pageSize}/${form.page}/${form.order}`, form)
+    },
+    Get: (form)=> {
+      return instance.get(`/v1/contest/question/info/${form.id}`)
     }
   }
 }

@@ -17,7 +17,7 @@
     <el-row class="container5" type="flex" :gutter="20">
       <el-col class="item" :span="6" v-for="i in list" :key="i.ID">
         <el-card :body-style="{ padding: '0px' }">
-          <img src="http://res.mengxiangjing.com/AmericanCulturalCapital_ZH-CN8717487767.jpg" class="image">
+          <img src="http://res.mengxiangjing.com/ChobeChick_ZH-CN9997116812.jpg" class="image">
           <div style="padding: 14px;">
             <span>
             <router-link :to="'/repo/'+i.Name">{{i.Name}}</router-link>
@@ -40,7 +40,7 @@
 
 <script>
   export default {
-    name: 'MyRepository',
+    name: 'MyContestView',
     components: {},
     data() {
       return {
@@ -50,10 +50,7 @@
           page: 0,
           order: 'ID'
         },
-        total: 2,
-        searchForm: {
-          search: ''
-        }
+        total: 2
       }
     },
     mounted() {
@@ -110,6 +107,7 @@
   .select {}
 
   .search {
+    margin-left: 20px;
     margin-right: 20px;
     width: 200px;
   }

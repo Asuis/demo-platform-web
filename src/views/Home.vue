@@ -2,7 +2,7 @@
     <div class="home-container">
         <Navbar></Navbar>
         <router-view />
-        <Footer></Footer>
+        <Footer class="home-footer"></Footer>
     </div>
 </template>
 
@@ -23,5 +23,9 @@
     .home-container {
         height: 100vh;
         width: 100%;
+    }
+    .home-footer{
+     position: fixed;
+   bottom:0;
     }
 </style>
